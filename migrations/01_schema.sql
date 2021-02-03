@@ -1,3 +1,4 @@
+/*Drop table i.e. delete it and all records before re-creating the table*/
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS properties CASCADE;
 DROP TABLE IF EXISTS reservations CASCADE;
