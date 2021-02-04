@@ -1,16 +1,4 @@
-const { Pool, Client} = require('pg');
-const pool = new Pool({
-  user: 'vagrant',
-  host:'localhost',
-  database: 'lightbnb',
-  password:'123'
-})
-
-
-const properties = require('./json/properties.json');
-const users = require('./json/users.json');
-
-/// Users
+const pool = require('./db/index')
 
 /**
  * Get a single user from the database given their email.
@@ -41,7 +29,6 @@ const getUserWithId = function(id) {
   .catch (() => null)
 }
 exports.getUserWithId = getUserWithId;
-
 
 /**
  * Add a new user to the database.
@@ -151,7 +138,6 @@ const getAllProperties = function(options, limit = 10) {
   })
 }
 exports.getAllProperties = getAllProperties;
-
 
 /**
  * Add a property to the database
