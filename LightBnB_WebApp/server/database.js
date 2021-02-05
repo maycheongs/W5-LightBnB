@@ -67,7 +67,7 @@ const getAllReservations = function(guest_id, limit = 10) {
     SELECT reservations.*, properties.*, avg(rating) as average_rating
     FROM reservations
     JOIN properties ON properties.id = reservations.property_id
-    JOIN property_reviews ON reservations.property_id = property_reviews.property_id
+    LEFT JOIN property_reviews ON reservations.property_id = property_reviews.property_id
     WHERE reservations.guest_id = $1 AND end_date < now()::date
     GROUP BY properties.id, reservations.id
     ORDER BY start_date
@@ -156,3 +156,18 @@ const addProperty = function(property) {
   .catch(err => console.log(err))
 }
 exports.addProperty = addProperty;
+
+const addReservation = function(form,userId) {  
+
+  queryParams = [parseInt(userId), parseInt(form.propertyId), form.startDate, form.endDate];
+  console.log(queryParams) 
+  return pool.query(`
+  INSERT INTO reservations (guest_id, property_id, start_date, end_date)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *;`, [parseInt(userId), parseInt(form.propertyId), form.startDate, form.endDate])
+  .then (res => res.rows[0])
+  .catch (err => console.log(err))
+
+}
+
+exports.addReservation = addReservation;

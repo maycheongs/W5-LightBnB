@@ -14,6 +14,7 @@ $(() => {
     switch (item) {
       case 'listings':
         $propertyListings.appendTo($main);
+        console.log('this')
         break;
       case 'newProperty':
         $newPropertyForm.appendTo($main);
